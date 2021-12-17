@@ -1,8 +1,6 @@
 package com.ui.component.dialog;
 
-import com.ui.component.LobbyPanel;
 import com.ui.component.MainFrame;
-import com.ui.scheme.FontScheme;
 import com.ui.scheme.LayoutScheme;
 
 import javax.swing.*;
@@ -20,6 +18,7 @@ public class RequestPrivateMatchDialog extends AppDialog {
         super(mainFrame);
         dialogMessage.setText(label);
         parentFrame = mainFrame;
+
         privateMatchIDField = new JTextField(10);
         privateMatchIDField.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 24));
         privateMatchIDField.setHorizontalAlignment(JTextField.CENTER);
@@ -29,10 +28,15 @@ public class RequestPrivateMatchDialog extends AppDialog {
                 if (!Character.isAlphabetic(e.getKeyChar())
                     && !Character.isDigit(e.getKeyChar())
                     || privateMatchIDField.getText().length() >= 4) {
-                    e.consume(); //Maximum private lobby ID length = 4, digit or alphabet only
+                    e.consume(); //IDの長さ上限は4
                 }
             }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                positiveButton.setEnabled(privateMatchIDField.getText().length() > 3); //IDの長さが4以外の場合、確認ボタンを無効化
+            }
         });
+        positiveButton.setEnabled(false); //確認ボタンの初期化（無効）
         positiveButton.addActionListener(new requestPrivateMatchAction());
         contentPane.add(privateMatchIDField, LayoutScheme.DIALOG_TEXTFIELD.getLayout());
     }
@@ -45,9 +49,7 @@ public class RequestPrivateMatchDialog extends AppDialog {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             String id = privateMatchIDField.getText();
-            if (id.length() == 4) { //TODO: need more work on invalid id handling
-                parentFrame.changePanel(parentFrame.createLobbyPanel("private", id));
-            }
+            parentFrame.changePanel(parentFrame.getLobbyPanel("private", id));
         }
     }
 }
