@@ -13,7 +13,7 @@ class Lobby
 	private String lobbyPassword;
 
 
-	public Lobby(String id, String pass, boolean patternFlag)//pri or ran
+	public Lobby(String id, String pass, boolean patternFlag)//private or random
 	{
 		this.users = new ArrayList<>();
     	this.lobbyID = id;
@@ -68,7 +68,7 @@ class Lobby
 	public void deleteUser(String userid)
 	{
 		int pos = this.getUserNum(userid);
-		this.users.get(pos).setStatus(0);
+		this.users.get(pos).exitLobby();
 		this.users.remove(pos);
 	}
 

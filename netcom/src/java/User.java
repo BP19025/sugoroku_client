@@ -2,6 +2,14 @@
  *ユーザのクラス
  *@author BP19025
  */
+
+// status
+ #define outLobby 0
+ #define inRandom 1
+ #define inPrivate 2
+ #define inGame 3
+ //
+
 class User
 {
     private String userName;
@@ -9,11 +17,19 @@ class User
     private int status; //　0=ロビー外　１=ランダムロビー内　2=プライベートロビー内　3=ゲーム中
     private String lobbyID;
 
+    User(String userName,String webSocketID)
+    {
+        this.userName=userName;
+        this.webSocketID=webSocketID;
+        this.status=outLobby;
+        this.lobbyID=null;
+    }
+
     User(String userName,String webSocketID,int status,String lobbyID)
     {
         this.userName=userName;
         this.webSocketID=webSocketID;
-        this.status=status
+        this.status=status;
         this.lobbyID=lobbyID;
     }
 
@@ -52,4 +68,9 @@ class User
         return this.lobbyID;
     }
 
+    public void exitLobby()
+    {
+        setStatus(outLobby);
+        setLobbyID(null);
+    }
 };

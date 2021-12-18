@@ -35,7 +35,7 @@ class ClientManageServer
 
 	public void signIn(String userID, String pwd)
 	{
-		boolean isExistUser = this.searchUser(userID, pwd);
+		boolean isExistUser = dbManager.searchUser(userID, pwd);
 		if(isExistUser)
 		{
 			User user = new User();//
