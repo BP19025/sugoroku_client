@@ -3,7 +3,7 @@
  *@author BP19025
  */
 
-// status
+//user status
  #define outLobby 0
  #define inRandom 1
  #define inPrivate 2

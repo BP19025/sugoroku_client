@@ -77,12 +77,28 @@ class ClientManageServer
 		}
 	}
 
-	public void matchRandom()//userID?
+	public void matchRandom(String userID)
 	{
 		Lobby lobby = this.decideRandomLobby();
-		lobby.addUser(userID);//User or userID
+        user.setStatus(1);
+        match(lobby,userID);
+	}
+
+	public void matchPrivate(String userID,String lobbyID)
+	{
+        Lobby lobby = searchLobby(String lobbyID);
+        if(lobby==null)
+        {
+            lobby =new Lobby(lobbyID, null, false);//pwd??
+        }
+        user.setStatus(2);
+        match(lobby,userID);
+	}
+
+    public void match(Lobby lobby,String userID)//コードの再利用
+	{
+	    lobby.addUser(userID);
 		User user = this.searchUser(userID);
-		user.setStatus(1);//何番？
 		user.setLobbyID(lobby.getLobbyID());
 
 		ArrayList<User> lobbyUsers = lobby.getUserList();
@@ -92,10 +108,6 @@ class ClientManageServer
 			sockID = lobbyUser.getWebSocketID(num);
 			//msgはどうするか
 		}
-	}
-
-	public void matchPrivate()
-	{
 	}
 
 	public boolean isExistLobby(String lobbyID)
@@ -118,7 +130,7 @@ class ClientManageServer
 	{
 		return new Lobby(lobbyID, pass, isRandom);//passいらないのでは
 	}
-decideRandomLobby
+
 	public boolean exitLobby(String userID)
 	{
 		User user = this.searchUser(userID);
@@ -148,11 +160,17 @@ decideRandomLobby
 	    int random_num=0;//ランダムロビーの数
 	    for(int i=0;i<lobbys.size();i++)
         {
-            if(lobbys.get(i).checkRandom()==true&&lobbys.get(i).getUserNum()<4) return lobbys.get(i);
-            else if(lobbys.get(i).checkRandom()==true&&lobbys.get(i).getUserNum()==4)random_num++;
+            if(lobbys.get(i).checkRandom()==true&&lobbys.get(i).getUserNum()<4)
+            {
+                return lobbys.get(i);
+            }
+            else if(lobbys.get(i).checkRandom()==true&&lobbys.get(i).getUserNum()==4)
+            {
+                random_num++;
+            }
         }
         //id 変更点
-        return createLobby(0000+random_num,true)//ロビーID微妙
+        return createLobby(0000+random_num,true);//ロビーID微妙
         //
 		//randomLobbyを探す
 		//空きがあったら返す
