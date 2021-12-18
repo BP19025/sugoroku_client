@@ -6,7 +6,7 @@ class User
 {
     private String userName;
     private String webSocketID;
-    private int status;
+    private int status; //　0=ロビー外　１=ランダムロビー内　2=プライベートロビー内　3=ゲーム中
     private String lobbyID;
 
     User(String userName,String webSocketID,int status,String lobbyID)
