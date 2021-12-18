@@ -51,7 +51,7 @@ class Lobby
 
 	public ArrayList<User> getUserList()
 	{
-		return this.users;
+		return this.users;isRandom
 	}
 
 	public void setReady(String userid)
@@ -75,5 +75,10 @@ class Lobby
 	public String getPassword()
 	{
 		return this.lobbyPassword;
+	}
+
+	public boolean checkRandom()//追加
+	{
+	    return isRandom;
 	}
 }

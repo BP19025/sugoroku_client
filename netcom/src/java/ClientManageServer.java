@@ -112,13 +112,13 @@ class ClientManageServer
 
 		return false;
 	}
-
+//登録チェック
 	//保留、必要性は要確認
 	public Lobby createLobby(String lobbyID, boolean isRandom)
 	{
 		return new Lobby(lobbyID, pass, isRandom);//passいらないのでは
 	}
-
+decideRandomLobby
 	public boolean exitLobby(String userID)
 	{
 		User user = this.searchUser(userID);
@@ -145,6 +145,15 @@ class ClientManageServer
 
 	public Lobby decideRandomLobby()
 	{
+	    int random_num=0;//ランダムロビーの数
+	    for(int i=0;i<lobbys.size();i++)
+        {
+            if(lobbys.get(i).checkRandom()==true&&lobbys.get(i).getUserNum()<4) return lobbys.get(i);
+            else if(lobbys.get(i).checkRandom()==true&&lobbys.get(i).getUserNum()==4)random_num++;
+        }
+        //id 変更点
+        return createLobby(0000+random_num,true)//ロビーID微妙
+        //
 		//randomLobbyを探す
 		//空きがあったら返す
 		//空きが無かったらcreate
