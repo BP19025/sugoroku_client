@@ -35,17 +35,25 @@ class ClientManageServer
 
 	public void signIn(String userID, String pwd)
 	{
-		boolean isExistUser = dbManager.searchUser(userID, pwd);
-		if(isExistUser)
-		{
-			User user = new User();//
-			this.users.add(user);
-			comManager.sendMessage();//str
-		}
-		else
-		{
+		boolean isExistUser = dbManager.searchUser(userID, pwd);//登録チェック
+		if(isExistUser)//登録されている場合
+        {
+            if(/*signIn check*/)
+            {
+                //既にsignIn中、失敗メッセージを返す
+            }
+            else//signIn処理を行う
+            {
+                User user = new User();//
+                this.users.add(user);
+                comManager.sendMessage();//str
+            }
+        }
+        else
+        {
+            // 登録されていない　失敗メッセージ
+        }
 
-		}
 	}
 
 	/**
