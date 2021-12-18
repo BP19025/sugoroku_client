@@ -68,7 +68,7 @@ class ClientManageServer
 
 		if(isExistUser)
 		{
-
+            //失敗メッセージを返す。
 		}
 		else
 		{
@@ -124,7 +124,7 @@ class ClientManageServer
 
 		return false;
 	}
-//登録チェック
+
 	//保留、必要性は要確認
 	public Lobby createLobby(String lobbyID, boolean isRandom)
 	{
@@ -229,4 +229,5 @@ class ClientManageServer
 			}
 		}
 	}
+
 }
