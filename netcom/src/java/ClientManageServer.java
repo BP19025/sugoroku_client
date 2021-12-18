@@ -35,7 +35,17 @@ class ClientManageServer
 
 	public void signIn(String userID, String pwd)
 	{
+		boolean isExistUser = this.searchUser(userID, pwd);
+		if(isExistUser)
+		{
+			User user = new User();//
+			this.users.add(user);
+			comManager.sendMessage();//str
+		}
+		else
+		{
 
+		}
 	}
 
 	/**
@@ -46,7 +56,7 @@ class ClientManageServer
 	 */
 	public void signUp(String userID, String pwd)
 	{
-		boolean isExistUser = dbManager.searchUser(userID, pwd);
+		boolean isExistUser = dbManager.searchUser(userID, pwd);//signUpで成功失敗の判定でもいいのでは
 
 		if(isExistUser)
 		{
@@ -55,12 +65,25 @@ class ClientManageServer
 		else
 		{
 			this.dbManager.signUp(userID, pwd);
-			this.comManager.sendMessage();
+			this.comManager.sendMessage();//要msgの形式確認
 		}
 	}
 
-	public void matchRandom()
+	public void matchRandom()//userID?
 	{
+		Lobby lobby = this.decideRandomLobby();
+		lobby.addUser(userID);//User or userID
+		User user = this.searchUser(userID);
+		user.setStatus(1);//何番？
+		user.setLobbyID(lobby.getLobbyID());
+
+		ArrayList<User> lobbyUsers = lobby.getUserList();
+		String sockID;
+		for(int num = 0; num < lobbyUsers.size(); num++)
+		{
+			sockID = lobbyUser.getWebSocketID(num);
+			//msgはどうするか
+		}
 	}
 
 	public void matchPrivate()
@@ -82,8 +105,10 @@ class ClientManageServer
 		return false;
 	}
 
-	public void createLobby(String lobbyID)
+	//保留、必要性は要確認
+	public Lobby createLobby(String lobbyID, boolean isRandom)
 	{
+		return new Lobby(lobbyID, pass, isRandom);//passいらないのでは
 	}
 
 	public boolean exitLobby(String userID)
@@ -112,10 +137,16 @@ class ClientManageServer
 
 	public Lobby decideRandomLobby()
 	{
+		//randomLobbyを探す
+		//空きがあったら返す
+		//空きが無かったらcreate
+		//
 	}
 
 	public void startGame(String str)
 	{
+
+		//開始時にステータスを変更
 	}
 
 	public void castChat(String chat)
